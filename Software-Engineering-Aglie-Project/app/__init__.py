@@ -10,7 +10,7 @@ login_manager = LoginManager()
 def create_app():
     app = Flask(__name__)
     app.secret_key = 'your_secret_key'
-    app.config.from_object('Config')
+    app.config.from_object('config.Config')
 
     login_manager.init_app(app)
     bcrypt.init_app(app)
