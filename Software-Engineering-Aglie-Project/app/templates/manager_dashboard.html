@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center mt-4">Manager Dashboard</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Assigned To</th>
+                <th>Status</th>
+                <th>Priority</th>
+                <th>Delete ticket</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ticket in tickets %}
+            <tr>
+                <td><a href="{{ url_for('routes.ticket_details', id=ticket.id) }}">
+                    {{ ticket.title }}
+                </a></td>
+                <td>{{ ticket.description }}</td>
+                <td>
+                    {% if ticket.tickets_assigned %}
+                        {{ ticket.tickets_assigned.username }}
+                    {% else %}
+                        Not Assigned
+                    {% endif %}
+                </td>
+                <td>{{ ticket.status }}</td>
+                <td>{{ ticket.priority_level }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('routes.delete_ticket', id=ticket.id) }}" id="delete-ticket-{{ ticket.id }}" class="d-inline">
+                        <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete({{ ticket.id }});">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ url_for('routes.create_ticket') }}" class="btn btn-success mb-3">Create New Ticket</a>
+    <a href="{{ url_for('routes.retrieve_users') }}" class="btn btn-primary mb-3">View Users</a>
+</div>
+{% endblock %}

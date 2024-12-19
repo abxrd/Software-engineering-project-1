@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center mt-4">Edit Ticket: {{ ticket.title }}</h2>
+    <form method="POST" action="{{ url_for('routes.edit_ticket', id=ticket.id) }}">
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" name="title" value="{{ ticket.title }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" id="description" name="description" rows="3" required>{{ ticket.description }}</textarea>
+        </div>
+        <div class="mb-3">
+            <label for="type_of_ticket" class="form-label">Type</label>
+            <input type="text" class="form-control" id="type_of_ticket" name="type_of_ticket" value="{{ ticket.type_of_ticket }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="priority_level" class="form-label">Priority Level</label>
+            <select class="form-select" id="priority_level" name="priority_level" required>
+                <option value="Low" {% if ticket.priority_level == "Low" %}selected{% endif %}>Low</option>
+                <option value="Medium" {% if ticket.priority_level == "Medium" %}selected{% endif %}>Medium</option>
+                <option value="High" {% if ticket.priority_level == "High" %}selected{% endif %}>High</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="start_date" class="form-label">Start Date</label>
+            <input type="date" class="form-control" id="start_date" name="start_date" value="{{ ticket.start_date }}">
+        </div>
+        <div class="mb-3">
+            <label for="end_date" class="form-label">End Date</label>
+            <input type="date" class="form-control" id="end_date" name="end_date" value="{{ ticket.end_date }}">
+        </div>
+        <div class="mb-3">
+            <label for="status" class="form-label">Status</label>
+            <select class="form-select" id="status" name="status">
+                <option value="To Do" {% if ticket.status == "To Do" %}selected{% endif %}>To Do</option>
+                <option value="In Progress" {% if ticket.status == "In Progress" %}selected{% endif %}>In Progress</option>
+                <option value="Done" {% if ticket.status == "Done" %}selected{% endif %}>Done</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="assigned_to" class="form-label">Assigned To</label>
+            <input type="text" class="form-control" id="assigned_to" name="assigned_to" value="{{ ticket.tickets_assigned.username if ticket.tickets_assigned else 'Unassigned' }}">
+        </div>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a href="{{ url_for('routes.ticket_details', id=ticket.id) }}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

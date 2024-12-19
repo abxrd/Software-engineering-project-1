@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block content %}
+ <div class="container">
+    <h1 class="text-center mt-4">Kanban Board</h1>
+    <div class="kanban-board">
+
+        <!-- To Do Column -->
+        <div class="kanban-column">
+            <h5>To Do</h5>
+            {% for ticket in to_do_tickets %}
+                <div class="kanban-card
+                    {% if ticket.priority_level == 'High' %} priority-high
+                    {% elif ticket.priority_level == 'Medium' %} priority-medium
+                    {% elif ticket.priority_level == 'Low' %} priority-low
+                    {% endif %}">
+                    <h6><strong><a href="{{ url_for('routes.ticket_details', id=ticket.id) }}">
+                        {{ ticket.title }}
+                    </a></strong></h6>
+                    <p>{{ ticket.description }}</p>
+                    <p><strong>Priority:</strong> {{ ticket.priority_level }}</p>
+                    <p><strong>Assigned to:</strong>
+                        {% if ticket.tickets_assigned %}
+                            {{ ticket.tickets_assigned.username }}
+                        {% else %}
+                            Not Assigned
+                        {% endif %}
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- In Progress Column -->
+        <div class="kanban-column">
+            <h5>In Progress</h5>
+            {% for ticket in in_progress_tickets %}
+                <div class="kanban-card
+                    {% if ticket.priority_level == 'High' %} priority-high
+                    {% elif ticket.priority_level == 'Medium' %} priority-medium
+                    {% elif ticket.priority_level == 'Low' %} priority-low
+                    {% endif %}">
+                    <h6><strong><a href="{{ url_for('routes.ticket_details', id=ticket.id) }}">
+                        {{ ticket.title }}
+                    </a></strong></h6>
+                    <p>{{ ticket.description }}</p>
+                    <p><strong>Priority:</strong> {{ ticket.priority_level }}</p>
+                    <p><strong>Assigned to:</strong>
+                        {% if ticket.tickets_assigned %}
+                            {{ ticket.tickets_assigned.username }}
+                        {% else %}
+                            Not Assigned
+                        {% endif %}
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Done Column -->
+        <div class="kanban-column">
+            <h5>Done</h5>
+            {% for ticket in done_tickets %}
+                <div class="kanban-card
+                    {% if ticket.priority_level == 'High' %} priority-high
+                    {% elif ticket.priority_level == 'Medium' %} priority-medium
+                    {% elif ticket.priority_level == 'Low' %} priority-low
+                    {% endif %}">
+                    <h6><strong><a href="{{ url_for('routes.ticket_details', id=ticket.id) }}">
+                        {{ ticket.title }}
+                    </a></strong></h6>
+                    <p>{{ ticket.description }}</p>
+                    <p><strong>Priority:</strong> {{ ticket.priority_level }}</p>
+                    <p><strong>Assigned to:</strong>
+                        {% if ticket.tickets_assigned %}
+                            {{ ticket.tickets_assigned.username }}
+                        {% else %}
+                            Not Assigned
+                        {% endif %}
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+ </div>
+{% endblock %}
