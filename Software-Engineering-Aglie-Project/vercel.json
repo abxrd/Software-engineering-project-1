@@ -1,7 +1,8 @@
 {
+  "version": 2,
     "builds": [
       {
-        "src": "run.py",
+        "src": "./run.py",
         "use": "@vercel/python"
       }
     ],
