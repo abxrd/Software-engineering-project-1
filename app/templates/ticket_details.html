@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center mt-4">{{ ticket.title }}</h2>
+    <div class="card mt-4">
+        <div class="card-body">
+            <h6 class="text-center">{{ ticket.description }}</h6>
+            <p class="card-text"><strong>Type:</strong> {{ ticket.type_of_ticket }}</p>
+            <p class="card-text"><strong>Priority Level:</strong> {{ ticket.priority_level }}</p>
+            <p class="card-text"><strong>Status:</strong> {{ ticket.status }}</p>
+            <p class="card-text"><strong>Start Date:</strong> {{ ticket.start_date }}</p>
+            <p class="card-text"><strong>End Date:</strong> {{ ticket.end_date }}</p>
+            <p class="card-text"><strong>Assigned To:</strong>
+                {{ ticket.tickets_assigned.username if ticket.tickets_assigned else 'Unassigned' }}
+            </p>
+
+            <!-- Assign button of employees to assign the ticket to them -->
+            {% if current_user.role == "employee" %}
+                <form method="POST" action="{{ url_for('routes.assign_ticket', id=ticket.id) }}"  class="d-inline me-2">
+                    <button type="submit" class="btn btn-primary">Assign to Me</button>
+                </form>
+            {% endif %}
+
+            <form method="POST" action="{{ url_for('routes.delete_ticket', id=ticket.id) }}" id="delete-ticket-{{ ticket.id }}" class="d-inline">
+                <button type="button" class="btn btn-danger" onclick="confirmDelete({{ ticket.id }});">Delete</button>
+            </form>
+
+            {% if current_user.role == "manager" %}
+                <form method="GET" action="{{ url_for('routes.edit_ticket', id=ticket.id) }}" class="d-inline">
+                    <button type="submit" class="btn btn-warning">Edit</button>
+                </form>
+            {% endif %}
+
+            <a href="{{ url_for('routes.index') }}" class="btn btn-secondary">Cancel</a>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

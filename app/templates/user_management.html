@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center mt-4">User management</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Role</th>
+                <th>Remove User</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td><a href="{{ url_for('routes.account_details', id=user.id) }}">
+                    {{ user.username }}
+                </a></td>
+                <td>
+                    <form method="POST" action="{{ url_for('routes.update_user_role', id=user.id) }}" class="d-inline">
+                        <select name="status" class="form-control form-control-sm d-inline w-auto">
+                            <option value="manager" {% if user.role == 'manager' %}selected{% endif %}>Manager</option>
+                            <option value="employee" {% if user.role == 'employee' %}selected{% endif %}>Employee</option>
+                        </select>
+                        <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                    </form>
+                </td>
+                <td>
+                    <form method="POST" action="{{ url_for('routes.delete_user', id=user.id) }}" id="delete-user-{{ user.id }}" class="d-inline">
+                        <button type="button" class="btn btn-danger btn-sm" onclick="confirmDeleteUser({{ user.id }});">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ url_for('routes.register') }}" class="btn btn-success mb-3">Create New Account</a>
+    <a href="{{ url_for('routes.dashboard') }}" class="btn btn-secondary mb-3">Cancel</a>
+</div>
+{% endblock %}

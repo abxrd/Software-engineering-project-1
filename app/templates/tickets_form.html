@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center mt-4">Create New Ticket</h2>
+    <form method="POST" action="{{ url_for('routes.create_ticket') }}" class="mx-auto mt-4" style="max-width: 600px;" onsubmit="return validateTaskForm();">
+        <div class="mb-3">
+            <label for="title" class="form-label"><strong>Ticket Title</strong></label>
+            <input type="text" class="form-control" id="title" name="title" required>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label"><strong>Ticket Description</strong></label>
+            <textarea class="form-control" id="description" name="description" rows="4"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="type_of_ticket" class="form-label"><strong>Ticket Type</strong></label>
+            <select class="form-control" id="type_of_ticket" name="type_of_ticket" required>
+                <option value="bug">Bug</option>
+                <option value="task">Task</option>
+                <option value="story">Story</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="priority_level" class="form-label"><strong>Ticket Priority</strong></label>
+            <select class="form-control" id="priority_level" name="priority_level" required>
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="status" class="form-label"><strong>Ticket Status</strong></label>
+            <select class="form-control" id="status" name="status" required>
+                <option value="To Do">To Do</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Done">Done</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="start_date" class="form-label"><strong>Ticket Start Date</strong></label>
+            <input type="date" class="form-control" id="start_date" name="start_date">
+        </div>
+        <div class="mb-3">
+            <label for="end_date" class="form-label"><strong>Ticket End Date</strong></label>
+            <input type="date" class="form-control" id="end_date" name="end_date">
+        </div>
+        <button type="submit" class="btn btn-success">Submit</button>
+        <a href="{{ url_for('routes.dashboard') }}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center mt-4">Account</h2>
+    <div class="card mt-4">
+        <div class="card-body">
+            <p class="card-text"><strong>Username:</strong> {{ user.username }}</p>
+            <p class="card-text"><strong>Role:</strong> {{ user.role }}</p>
+            <form method="GET" action="{{ url_for('routes.reset_password', id=user.id) }}" class="d-inline">
+                    <button type="submit" class="btn btn-warning">Reset Password</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

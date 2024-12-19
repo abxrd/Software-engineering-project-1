@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center mt-4">Employee Dashboard</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Priority</th>
+                <th>Update</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ticket in tickets %}
+            <tr>
+                <td><a href="{{ url_for('routes.ticket_details', id=ticket.id) }}">
+                    {{ ticket.title }}
+                </a></td>
+                <td>{{ ticket.description }}</td>
+                <td>{{ ticket.status }}</td>
+                <td>{{ ticket.priority_level }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('routes.update_ticket', id=ticket.id) }}" class="d-inline">
+                        <select name="status" class="form-control form-control-sm d-inline w-auto">
+                            <option value="To Do" {% if ticket.status == 'To Do' %}selected{% endif %}>To Do</option>
+                            <option value="In Progress" {% if ticket.status == 'In Progress' %}selected{% endif %}>In Progress</option>
+                            <option value="Done" {% if ticket.status == 'Done' %}selected{% endif %}>Done</option>
+                        </select>
+                        <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ url_for('routes.create_ticket') }}" class="btn btn-success mb-3">Create New Ticket</a>
+</div>
+{% endblock %}

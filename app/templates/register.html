@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center mt-4">Register</h2>
+    <form method="POST" action="{{ url_for('routes.register') }}" class="mx-auto mt-4" style="max-width: 400px;" onsubmit="return validateRegistrationForm();">
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" name="username" required>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        <div class="mb-3">
+            <label for="confirmPassword" class="form-label">Confirm Password</label>
+            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+        </div>
+        <div class="mb-3">
+            <label for="role" class="form-label">Role</label>
+            <select class="form-control" id="role" name="role" required>
+                <option value="manager">Manager</option>
+                <option value="employee">Employee</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Register</button>
+    </form>
+</div>
+{% endblock %}
