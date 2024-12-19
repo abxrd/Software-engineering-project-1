@@ -25,9 +25,10 @@ def create_app():
     from .routes import app_routes
     app.register_blueprint(app_routes)
 
-    with app.app_context():
-        db.create_all()
-        seed_data()
+    if app.config["ENV"] == "development":
+        with app.app_context():
+            db.create_all()
+            seed_data()
 
 
     return app
